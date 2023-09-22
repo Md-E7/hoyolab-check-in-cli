@@ -40,19 +40,18 @@ export class HonkaiImpactService {
 
   async start (account: Account): Promise<boolean> {
     try {
-      const checkInResponse = await this.checkIn()
-      logger.debug('Honkai Impact Check-in', checkInResponse)
+      await this.checkIn()
 
       return true
     } catch (e) {
       if (e instanceof HoyolabCookieError) {
-        logger.error(`Akun hoyolab dengan nama ${account.name} cookie tidak valid`)
+        logger.error(`Akun hoyolab ${account.name} cookie tidak valid`)
         account.cookie = null
         config.update(account.name, account)
       }
 
       if (e instanceof HoyolabActIdError) {
-        logger.error(`Akun hoyolab dengan nama ${account.name} honkai_impact_act_id tidak valid`)
+        logger.error(`Akun hoyolab ${account.name} honkai_impact_act_id tidak valid`)
         account.honkai_impact_act_id = null
         config.update(account.name, account)
       }

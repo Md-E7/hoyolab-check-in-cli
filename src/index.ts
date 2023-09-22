@@ -1,13 +1,13 @@
 #! /usr/bin/env node
 
 import data from './../package.json'
-import { createConsola } from 'consola'
+import pino from 'pino'
 import { Config } from './config'
 import { program } from 'commander'
 import { accountCommand } from './commands/account-command'
 import { startCommand } from './commands/start-command'
 
-export const logger = createConsola({ level: 3 })
+export const logger = pino({ level: 'info' })
 export const config = new Config()
 
 program.name(data.name).description(data.description).version(data.version)

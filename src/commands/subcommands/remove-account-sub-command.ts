@@ -8,11 +8,11 @@ export const removeAccountSubCommand = createCommand('remove')
     const account = config.get(name)
 
     if (account == null) {
-      logger.error(`Akun hoyolab dengan nama ${name} tidak ada`)
+      logger.info(`Akun hoyolab ${name} tidak ada`)
       return
     }
 
     config.remove(name)
 
-    logger.success(`Akun hoyolab dengan nama ${name} berhasil dihapus`)
+    logger.info(`Akun hoyolab ${name} berhasil dihapus`)
   })

@@ -9,7 +9,7 @@ export const getAccountSubCommand = createCommand('get')
     const account = config.get(name)
 
     if (account == null) {
-      logger.error(`Akun hoyolab dengan nama ${name} tidak ada`)
+      logger.info(`Akun hoyolab ${name} tidak ada`)
       return
     }
 

@@ -37,5 +37,5 @@ export const startCommand = createCommand('start')
       }
     }
 
-    logger.success('Check-in otomatis dijalankan')
+    logger.info('Check-in otomatis dijalankan')
   })

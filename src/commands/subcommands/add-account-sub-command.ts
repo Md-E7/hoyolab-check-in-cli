@@ -35,7 +35,7 @@ export const addAccountSubCommand = createCommand('add')
 
     prompt.then(({ data }: any) => {
       if (config.has(data.name)) {
-        logger.error(`Akun hoyolab dengan nama ${data.name} sudah ada`)
+        logger.info(`Akun hoyolab ${data.name} sudah ada`)
         return
       }
 
@@ -47,6 +47,8 @@ export const addAccountSubCommand = createCommand('add')
         honkai_star_rail_act_id: data.honkai_star_rail_act_id
       })
 
-      logger.success(`Akun hoyolab dengan nama ${data.name} ditambahkan`)
-    }).catch(logger.error)
+      logger.info('Akun hoyolab berhasil ditambahkan')
+    }).catch(error => {
+      logger.error(error, 'Kesalahan pada add-account-form')
+    })
   })

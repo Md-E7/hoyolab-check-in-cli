@@ -100,8 +100,7 @@ export class GenshinImpactService {
 
   async start (account: Account): Promise<boolean> {
     try {
-      const checkInResponse = await this.checkIn()
-      logger.debug('Genshin Impact Check-In', checkInResponse)
+      await this.checkIn()
 
       const missions = await this.getReCheckInMission()
 
@@ -110,19 +109,18 @@ export class GenshinImpactService {
         await this.claimAward(mission.id)
       }
 
-      const reCheckInResponse = await this.reCheckIn()
-      logger.debug('Genshin Impact ReCheck-In', reCheckInResponse)
+      await this.reCheckIn()
 
       return true
     } catch (e) {
       if (e instanceof HoyolabCookieError) {
-        logger.error(`Akun hoyolab dengan nama ${account.name} cookie tidak valid`)
+        logger.error(`Akun hoyolab ${account.name} cookie tidak valid`)
         account.cookie = null
         config.update(account.name, account)
       }
 
       if (e instanceof HoyolabActIdError) {
-        logger.error(`Akun hoyolab dengan nama ${account.name} genshin_impact_act_id tidak valid`)
+        logger.error(`Akun hoyolab ${account.name} genshin_impact_act_id tidak valid`)
         account.genshin_impact_act_id = null
         config.update(account.name, account)
       }

@@ -9,7 +9,7 @@ export const updateAccountSubCommand = createCommand('update')
     const account = config.get(name)
 
     if (account == null) {
-      logger.error(`Akun hoyolab dengan nama ${name} tidak ada`)
+      logger.info(`Akun hoyolab ${name} tidak ada`)
       return
     }
 
@@ -57,6 +57,8 @@ export const updateAccountSubCommand = createCommand('update')
         honkai_star_rail_act_id: data.honkai_star_rail_act_id
       })
 
-      logger.success(`Akun hoyolab dengan nama ${data.name} berhasil diperbarui`)
-    }).catch(logger.error)
+      logger.info('Akun hoyolab berhasil diperbarui')
+    }).catch(error => {
+      logger.error(error, 'Kesalahan pada update-account-form')
+    })
   })

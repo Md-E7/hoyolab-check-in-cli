@@ -8,7 +8,7 @@ export const listAccountSubCommand = createCommand('list')
     const accounts = config.getAll()
 
     if (accounts.length === 0) {
-      logger.warn('Tidak ada data akun hoyolab yang tersimpan di komputer')
+      logger.info('Tidak ada data akun hoyolab yang tersimpan di komputer')
       return
     }
 
