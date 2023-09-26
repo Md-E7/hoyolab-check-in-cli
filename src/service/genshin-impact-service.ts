@@ -15,8 +15,8 @@ interface ReCheckInResponse {
 }
 
 export class GenshinImpactService {
-  private readonly cookie: string
-  private readonly act_id: string
+  private readonly cookie: string | null
+  private readonly act_id: string | null
 
   private readonly request = ofetch.create({
     baseURL: 'https://sg-hk4e-api.hoyolab.com/event/sol',
@@ -30,6 +30,9 @@ export class GenshinImpactService {
   }
 
   async checkIn (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/sign', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -48,7 +51,10 @@ export class GenshinImpactService {
     })
   }
 
-  async getReCheckInMission (): Promise<ReCheckInResponse> {
+  async getReCheckInMission (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/list', {
       method: 'GET',
       headers: { cookie: this.cookie },
@@ -60,6 +66,9 @@ export class GenshinImpactService {
   }
 
   async completeTask (taskId: number): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/complete', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -74,6 +83,9 @@ export class GenshinImpactService {
   }
 
   async claimAward (taskId: number): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/award', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -88,6 +100,9 @@ export class GenshinImpactService {
   }
 
   async reCheckIn (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/resign', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -102,7 +117,7 @@ export class GenshinImpactService {
     try {
       await this.checkIn()
 
-      const missions = await this.getReCheckInMission()
+      const missions: ReCheckInResponse = await this.getReCheckInMission()
 
       for (const mission of missions.data.list) {
         await this.completeTask(mission.id)

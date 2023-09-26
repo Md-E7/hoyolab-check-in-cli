@@ -15,8 +15,8 @@ interface ReCheckInResponse {
 }
 
 export class HonkaiStarRailService {
-  private readonly cookie: string
-  private readonly act_id: string
+  private cookie: string | null
+  private act_id: string | null
 
   private readonly request = ofetch.create({
     baseURL: 'https://sg-public-api.hoyolab.com/event/luna/os',
@@ -30,6 +30,9 @@ export class HonkaiStarRailService {
   }
 
   async checkIn (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/sign', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -48,7 +51,10 @@ export class HonkaiStarRailService {
     })
   }
 
-  async getReCheckInMission (): Promise<ReCheckInResponse> {
+  async getReCheckInMission (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/list', {
       method: 'GET',
       headers: { cookie: this.cookie },
@@ -60,6 +66,9 @@ export class HonkaiStarRailService {
   }
 
   async completeTask (taskId: number): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/complete', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -74,6 +83,9 @@ export class HonkaiStarRailService {
   }
 
   async claimAward (taskId: number): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/task/award', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -88,6 +100,9 @@ export class HonkaiStarRailService {
   }
 
   async reCheckIn (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/resign', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -102,7 +117,7 @@ export class HonkaiStarRailService {
     try {
       await this.checkIn()
 
-      const missions = await this.getReCheckInMission()
+      const missions: ReCheckInResponse = await this.getReCheckInMission()
 
       for (const mission of missions.data.list) {
         await this.completeTask(mission.id)
@@ -115,12 +130,14 @@ export class HonkaiStarRailService {
     } catch (e) {
       if (e instanceof HoyolabCookieError) {
         logger.error(`Akun hoyolab ${account.name} cookie tidak valid`)
+        this.cookie = null
         account.cookie = null
         config.update(account.name, account)
       }
 
       if (e instanceof HoyolabActIdError) {
         logger.error(`Akun hoyolab ${account.name} honkai_star_rail_act_id tidak valid`)
+        this.act_id = null
         account.honkai_star_rail_act_id = null
         config.update(account.name, account)
       }

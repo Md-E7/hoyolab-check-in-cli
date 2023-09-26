@@ -5,8 +5,8 @@ import { config, logger } from '../index'
 import type { Account } from '../types'
 
 export class HonkaiImpactService {
-  private readonly cookie: string
-  private readonly act_id: string
+  private cookie: string | null
+  private act_id: string | null
 
   private readonly request = ofetch.create({
     baseURL: 'https://sg-public-api.hoyolab.com/event/mani',
@@ -20,6 +20,9 @@ export class HonkaiImpactService {
   }
 
   async checkIn (): Promise<any> {
+    if (this.cookie == null) return
+    if (this.act_id == null) return
+
     return await this.request('/sign', {
       method: 'POST',
       headers: { cookie: this.cookie },
@@ -46,12 +49,14 @@ export class HonkaiImpactService {
     } catch (e) {
       if (e instanceof HoyolabCookieError) {
         logger.error(`Akun hoyolab ${account.name} cookie tidak valid`)
+        this.cookie = null
         account.cookie = null
         config.update(account.name, account)
       }
 
       if (e instanceof HoyolabActIdError) {
         logger.error(`Akun hoyolab ${account.name} honkai_impact_act_id tidak valid`)
+        this.act_id = null
         account.honkai_impact_act_id = null
         config.update(account.name, account)
       }
