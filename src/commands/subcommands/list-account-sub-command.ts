@@ -12,7 +12,5 @@ export const listAccountSubCommand = createCommand('list')
       return
     }
 
-    for (const account of accounts) {
-      showAccountData(account)
-    }
+    showAccountData(accounts)
   })

@@ -13,5 +13,5 @@ export const getAccountSubCommand = createCommand('get')
       return
     }
 
-    showAccountData(account)
+    showAccountData([account])
   })
