@@ -7,7 +7,13 @@ import { program } from 'commander'
 import { accountCommand } from './commands/account-command'
 import { startCommand } from './commands/start-command'
 
-export const logger = pino({ level: 'info' })
+export const logger = pino({
+  level: 'info',
+  transport: {
+    target: 'pino-pretty'
+  }
+})
+
 export const config = new Config()
 
 program.name(data.name).description(data.description).version(data.version)
