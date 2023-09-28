@@ -1,6 +1,6 @@
 {
   "name": "hoyolab-check-in-cli",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Sebuah alat untuk melakukan daily check-in pada akun honkai impact, genshin impact, honkai star rail kalian.",
   "author": "Md-E7",
   "license": "MIT",
