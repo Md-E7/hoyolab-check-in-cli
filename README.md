@@ -15,6 +15,8 @@ cd hoyolab-check-in-cli
 
 npm install
 
+npm run build
+
 npm link
 ```
 
