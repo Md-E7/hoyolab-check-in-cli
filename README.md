@@ -6,7 +6,7 @@
 
 - **Git** dan **Node.js** harus sudah terinstall di komputer kalian
 - **Clone** atau **download** repository ini
-- Masuk ke foldernya dan lakukan **npm install** dan **npm link**
+- Masuk ke foldernya dan lakukan **npm install** dan **npm run build** dan **npm link**
 
 ```shell
 git clone https://github.com/Md-E7/hoyolab-check-in-cli
